@@ -33,15 +33,26 @@ public class Point implements Comparable<Point> {
     }
 
     public double slopeTo(Point that) {               // the slope between this point and that point
-        //divide by 0
+        if (compareTo(that) == 0) return Double.NEGATIVE_INFINITY;
+        if (y == that.y) return 0.0;
+        if (x == that.x) return Double.POSITIVE_INFINITY;
         return (double)(that.y - y) / (that.x - x);
     }
 
-    private static class SlopeComparator implements Comparator<Point> {
+    private class SlopeComparator implements Comparator<Point> {
+
+        /*
+         * The SLOPE_ORDER comparator should compare points by the slopes they make with the invoking point (x0, y0).
+         * Formally, the point (x1, y1) is less than the point (x2, y2) if and only if the slope (y1 − y0) / (x1 − x0)
+         * is less than the slope (y2 − y0) / (x2 − x0). Treat horizontal, vertical, and degenerate line segments as in
+         * the slopeTo() method.
+         */
 
         @Override
-        public int compare(Point o1, Point o2) {
-            return 0;
+        public int compare(Point p1, Point p2) {
+
+            if (compareTo(p1) < compareTo(p2)) return -1;
+            return 1;
         }
     }
 }

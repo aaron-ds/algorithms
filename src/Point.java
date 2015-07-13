@@ -39,6 +39,12 @@ public class Point implements Comparable<Point> {
         return (double)(that.y - y) / (that.x - x);
     }
 
+    public static void main(String[] args) {
+        Point p = new Point(163, 163);
+        Point q = new Point(371, 470);
+        System.out.println(p.SLOPE_ORDER.compare(q,q));
+    }
+
     private class SlopeComparator implements Comparator<Point> {
 
         /*
@@ -51,8 +57,9 @@ public class Point implements Comparable<Point> {
         @Override
         public int compare(Point p1, Point p2) {
 
-            if (compareTo(p1) < compareTo(p2)) return -1;
-            return 1;
+            if (slopeTo(p1) < slopeTo(p2)) return -1;
+            if (slopeTo(p1) > slopeTo(p2)) return 1;
+            return 0;
         }
     }
 }
